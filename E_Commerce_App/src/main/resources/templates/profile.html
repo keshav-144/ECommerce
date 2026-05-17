@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>My Profile - BootStore</title>
+	<link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+	<!-- NAVBAR -->
+	<nav class="navbar">
+		<div class="logo">BootStore</div>
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li th:if="${session.loggedInUser != null}"><a href="/cart">My Cart</a></li>
+			<li th:if="${session.loggedInUser != null}">
+				Hello, <span th:text="${session.loggedInUser.name}"></span>
+			</li>
+			<li th:if="${session.loggedInUser != null}"><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+
+	<div class="profile-container">
+		<!-- Left Card -->
+		<div class="card profile-card">
+			<div class="avatar"></div>
+			<h3 th:text="${session.loggedInUser.name}">User Name</h3>
+			<p th:text="${session.loggedInUser.email}" style="color: #666; margin-top: 5px;"></p>
+		</div>
+		<!-- Right Card -->
+		<div class="card details-card">
+			<h2 style="margin-bottom: 20px; text-align: center;">Account Details</h2>
+			<table>
+				<tr>
+					<td>Full Name</td>
+					<td th:text="${session.loggedInUser.name}"></td>
+				</tr>
+				<tr>
+					<td>Email ID</td>
+					<td th:text="${session.loggedInUser.email}"></td>
+				</tr>
+				<tr>
+					<td>Phone Number</td>
+					<td th:text="${session.loggedInUser.phoneno}"></td>
+				</tr>
+				<tr>
+					<td>Residing City</td>
+					<td th:text="${session.loggedInUser.city}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="footer">
+		© 2026 BootStore. All rights reserved.
+	</div>
+</body>
+</html>

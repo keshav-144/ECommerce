@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login - BootStore</title>
+	<link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+	<!-- NAVBAR -->
+	<nav class="navbar">
+		<div class="logo">BootStore</div>
+		<ul class="nav-links">
+			<li><a href="/">Home</a></li>
+			<li><a href="/login">Login</a></li>
+			<li><a href="/register">Register</a></li>
+		</ul>
+	</nav>
+
+	<div class="login-container">
+		<div class="login-card">
+			<div class="left-panel">
+				<div class="left-top">
+					<h2>BootStore</h2>
+				</div>
+				<div class="left-bottom">
+					<p>Welcome back</p>
+					<h2>Log in to your account and continue your journey.</h2>
+				</div>
+			</div>
+			<div class="right-panel">
+				<form th:action="@{/loginForm}" th:object="${user}" method="post">
+					<h2 class="login-heading">Member Login</h2>
+					<div th:if="${successMsg}" class="success-box" style="color: green; margin-bottom: 20px; text-align: center;">
+						<h3 th:text="${successMsg}"></h3>
+					</div>
+					<div th:if="${errorMsg}" class="error-box" style="color: red; margin-bottom: 20px; text-align: center;">
+						<h3 th:text="${errorMsg}"></h3>
+					</div>
+					<div class="form-group">
+						<label>Email Address</label>
+						<input type="email" th:field="*{email}" placeholder="yourname@gmail.com" required>
+					</div>
+					<div class="form-group">
+						<label>Password</label>
+						<input type="password" th:field="*{password}" placeholder="********" required>
+					</div>
+					<button type="submit" class="login-btn">Sign In</button>
+					<p style="margin-top: 20px; text-align: center; font-size: 0.9rem;">
+						Don't have an account? <a href="/register" style="color: #223a5e; font-weight: bold;">Register here</a>
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		© 2026 BootStore. All rights reserved.
+	</div>
+</body>
+</html>

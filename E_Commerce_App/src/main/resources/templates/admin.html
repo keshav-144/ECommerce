@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - BootStore</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="login-container">
+    <div class="login-box">
+        <h2>Admin Authentication</h2>
+
+        <form th:action="@{/admin/login}" method="post">
+            <div class="form-group">
+                <label>Access Email</label>
+                <input type="email" name="email" class="form-control" placeholder="admin@bootstore.com" required>
+            </div>
+
+            <div class="form-group">
+                <label>Security Key</label>
+                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn-login">Verify & Login</button>
+        </form>
+
+        <p class="error" th:if="${error}" th:text="${error}"></p>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Dashboard</title>
+	<link rel="stylesheet" th:href="@{/css/admin-shared.css}">
+</head>
+<body>
+	<div class="container">
+		<!-- Sidebar -->
+		<div class="sidebar">
+			<h2>Admin Panel</h2>
+			<ul>
+				<li><a href="/dashboard" class="menu-link active">Dashboard</a></li>
+				<li><a th:href="@{/product/manage}" class="menu-link">Products</a></li>
+				<li><a th:href="@{/customer}" class="menu-link">Customers</a></li>
+				<li><a th:href="@{/admin/logout}" class="menu-link">Logout</a></li>
+			</ul>
+		</div>
+
+		<!-- Main Content -->
+		<div class="main-wrapper">
+			<div class="dashboard-content">
+				<h1>Dashboard Overview</h1>
+				<div class="card profile-card" style="max-width: 100%;">
+					<div class="image-box">
+						<img src="/images/user.png" alt="Admin">
+					</div>
+					<h3>System Administrator</h3>
+					<p style="color: #718096; margin-top: 5px;">Authenticated Session Active</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

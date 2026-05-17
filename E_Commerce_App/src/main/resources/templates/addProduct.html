@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Add Product - Admin</title>
+	<link rel="stylesheet" th:href="@{/css/admin-shared.css}">
+</head>
+<body>
+	<div class="container">
+		<!-- Sidebar -->
+		<div class="sidebar">
+			<h2>Admin Panel</h2>
+			<ul>
+				<li><a href="/dashboard" class="menu-link">Dashboard</a></li>
+				<li><a th:href="@{/product/manage}" class="menu-link">Products</a></li>
+				<li><a th:href="@{/customer}" class="menu-link">Customers</a></li>
+				<li><a th:href="@{/admin/logout}" class="menu-link">Logout</a></li>
+			</ul>
+		</div>
+
+		<!-- Main Content -->
+		<div class="main-wrapper">
+			<h1>Add New Product</h1>
+			<div class="form-container">
+				<form th:action="@{/saveProduct}" method="post" enctype="multipart/form-data">
+					<div class="form-group">
+						<label>Product Name</label>
+						<input type="text" name="name" placeholder="e.g. Leather Boots" required>
+					</div>
+					<div class="form-group">
+						<label>Product Description</label>
+						<textarea name="description" rows="4" placeholder="Brief details about the product"></textarea>
+					</div>
+					<div class="form-group">
+						<label>Original Price (₹)</label>
+						<input type="number" name="originalPrice" required>
+					</div>
+					<div class="form-group">
+						<label>Discounted Price (₹)</label>
+						<input type="number" name="discountedPrice" required>
+					</div>
+					<div class="form-group">
+						<label>Product Image</label>
+						<input type="file" name="imageFile">
+					</div>
+					<button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Save Product</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

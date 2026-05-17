@@ -1,0 +1,268 @@
+/* CART & ORDER PAGE CSS */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+	margin-top: 70px;
+	background: #f2f4f7;
+	color: #333;
+}
+
+/* NAVBAR - reusing from home.css logic */
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+	padding: 15px 5%;
+	background: #223a5e;
+	color: white;
+}
+
+.nav-links {
+	list-style: none;
+	display: flex;
+	gap: 20px;
+}
+
+.nav-links a {
+	color: white;
+	text-decoration: none;
+}
+
+/* Layout */
+.page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 30px 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.left {
+  flex: 3;
+  min-width: 320px;
+}
+
+.right {
+  flex: 1;
+  min-width: 320px;
+}
+
+.heading {
+	background: white;
+	padding: 20px;
+	border-radius: 12px 12px 0 0;
+	border-bottom: 1px solid #eee;
+}
+
+/* Product Item */
+.product-card-item {
+  background: white;
+  padding: 25px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  gap: 25px;
+}
+
+.product-card-item:last-child {
+	border-radius: 0 0 12px 12px;
+	border-bottom: none;
+}
+
+.product-card-item img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.details {
+	flex: 1;
+}
+
+.details h3 {
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  color: #1a202c;
+}
+
+.details p {
+	color: #718096;
+	font-size: 0.9rem;
+	margin-bottom: 15px;
+}
+
+.price {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.old {
+  text-decoration: line-through;
+  color: #a0aec0;
+  font-size: 0.95rem;
+}
+
+.new {
+  font-weight: 700;
+  color: #2d3748;
+  font-size: 1.25rem;
+}
+
+.qty {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty select {
+	padding: 5px 10px;
+	border-radius: 6px;
+	border: 1px solid #cbd5e0;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 0 0 12px 12px;
+}
+
+.actions button, .actions a button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #4a5568;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.actions button:hover {
+	color: #2b6cb0;
+	background: rgba(43, 108, 176, 0.05);
+}
+
+/* Right Side - Price Summary */
+.price-box {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.price-box h2 {
+	margin-bottom: 20px;
+	font-size: 1.3rem;
+	border-bottom: 1px solid #f0f0f0;
+	padding-bottom: 15px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+  font-size: 1rem;
+}
+
+.green { color: #38a169; font-weight: 600; }
+
+.total {
+  font-weight: 800;
+  font-size: 1.2rem;
+  padding-top: 15px;
+  border-top: 2px dashed #edf2f7;
+}
+
+.save {
+  background: #f0fff4;
+  padding: 12px;
+  color: #2f855a;
+  text-align: center;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.secure {
+  margin: 20px 0;
+  color: #a0aec0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+/* CTA Button */
+.order-btn {
+  width: 100%;
+  padding: 15px;
+  background: #fb641b;
+  color: white;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(251, 100, 27, 0.39);
+  transition: all 0.2s;
+}
+
+.order-btn:hover {
+	background: #f4511e;
+	transform: translateY(-2px);
+}
+
+/* MESSAGES */
+.toast {
+	position: fixed;
+	bottom: 80px;
+	right: 30px;
+	padding: 15px 25px;
+	border-radius: 8px;
+	z-index: 2000;
+	color: white;
+	box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.success-box { background: #48bb78; }
+.error-box { background: #f56565; }
+
+/* Footer */
+.footer {
+	text-align: center;
+	padding: 20px;
+	background: #222;
+	color: #718096;
+}
+
+@media (max-width: 768px) {
+  .page { padding: 15px; }
+  .product-card-item { flex-direction: column; align-items: center; text-align: center; }
+  .product-card-item img { width: 100%; max-width: 200px; height: auto; }
+  .price { justify-content: center; }
+  .qty { justify-content: center; }
+  .order-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+    z-index: 1100;
+  }
+  body { padding-bottom: 60px; }
+}

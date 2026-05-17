@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Order Summary - BootStore</title>
+
+	<link rel="stylesheet" th:href="@{/css/cart-responsive.css}">
+
+	<!-- Razorpay SDK -->
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+
+	<!-- NAVBAR -->
+	<nav class="navbar">
+		<div class="logo">BootStore</div>
+
+		<ul class="nav-links">
+			<li th:if="${session.loggedInUser != null}">
+				<a href="/">Home</a>
+			</li>
+
+			<li th:if="${session.loggedInUser != null}">
+				<a href="/profile">My Profile</a>
+			</li>
+
+			<li th:if="${session.loggedInUser != null}">
+				<a href="/logout">Logout</a>
+			</li>
+		</ul>
+	</nav>
+
+	<div class="page">
+
+		<!-- LEFT SIDE -->
+		<div class="left">
+
+			<div class="heading">
+				<h2>Order Summary</h2>
+			</div>
+
+			<div th:each="cart : ${cartItems}">
+
+				<div class="product-card-item">
+
+					<img th:src="@{'/images/' + ${cart.product.imageName}}" alt="product">
+
+					<div class="details">
+
+						<h3 th:text="${cart.product.name}"></h3>
+
+						<p th:text="${cart.product.description}"></p>
+
+						<div class="price">
+
+							<span class="old"
+								th:text="'₹' + ${cart.product.originalPrice * cart.quantity}">
+							</span>
+
+							<span class="new"
+								th:text="'₹' + ${cart.product.discountedPrice * cart.quantity}">
+							</span>
+
+						</div>
+
+						<div class="qty">
+							Qty:
+							<span th:text="${cart.quantity}"
+								style="font-weight: bold;">
+							</span>
+						</div>
+
+						<p>
+							Item Subtotal:
+
+							<strong
+								th:text="'₹' + ${cart.product.discountedPrice * cart.quantity}">
+							</strong>
+						</p>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- RIGHT SIDE -->
+		<div class="right">
+
+			<div class="price-box">
+
+				<h2>Final Payment</h2>
+
+				<div class="row">
+					<span>Total Items</span>
+					<span th:text="${cartItems.size()}"></span>
+				</div>
+
+				<div class="row">
+					<span>MRP Total</span>
+					<span th:text="'₹' + ${totalOriginal}"></span>
+				</div>
+
+				<div class="row">
+					<span>Discount Savings</span>
+
+					<!-- FIXED -->
+					<span class="green"
+						th:text="'-₹' + ${totalSavings}">
+					</span>
+				</div>
+
+				<div class="row total">
+
+					<span>Payable Amount</span>
+
+					<span id="totalAmountDisplay"
+						th:data-amount="${totalAmount}"
+						th:text="'₹' + ${totalAmount}">
+					</span>
+
+				</div>
+
+				<button type="button"
+						onclick="startPayment()"
+						class="order-btn"
+						style="margin-top: 25px;">
+
+					Pay Now & Confirm Order
+
+				</button>
+			</div>
+
+			<div class="secure">
+
+				<svg width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2">
+
+					<rect x="3" y="11"
+							width="18"
+							height="11"
+							rx="2"
+							ry="2">
+					</rect>
+
+					<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+
+				</svg>
+
+				<span>Encrypted Secure Transaction</span>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		© 2026 BootStore. All rights reserved.
+	</div>
+
+	<script>
+
+		function startPayment() {
+
+			const amount =
+				document.getElementById("totalAmountDisplay")
+				.getAttribute("data-amount");
+
+			// Create Order
+			fetch("/createPaymentOrder", {
+
+				method: "POST",
+
+				headers: {
+					"Content-Type": "application/json"
+				},
+
+				body: JSON.stringify({
+					amount: amount
+				})
+			})
+
+			.then(response => response.json())
+
+			.then(order => {
+
+				console.log("Server Response:", order);
+
+				// FIXED
+				if(order.status !== "success") {
+
+					alert("Order Creation Failed");
+
+					return;
+				}
+
+				const options = {
+
+					// FIXED
+					key: order.key,
+
+					amount: order.amount,
+
+					currency: order.currency,
+
+					name: "BootStore",
+
+					description: "Footwear Purchase",
+
+					image: "/images/logo.png",
+
+					// FIXED
+					order_id: order.orderId,
+
+					handler: function (response) {
+
+						alert(
+							"Payment Successful!\nPayment ID: "
+							+ response.razorpay_payment_id
+						);
+
+						window.location.href = "/profile";
+					},
+
+					prefill: {
+
+						name: "Customer Name",
+
+						email: "customer@example.com"
+					},
+
+					theme: {
+						color: "#223a5e"
+					}
+				};
+
+				const rzp1 = new Razorpay(options);
+
+				// FIXED
+				rzp1.on('payment.failed', function (response){
+
+					console.log(response.error);
+
+					alert("Payment Failed");
+
+					alert(response.error.description);
+				});
+
+				rzp1.open();
+			})
+
+			.catch(err => {
+
+				console.error("Payment Error:", err);
+
+				alert("Something went wrong. Please try again.");
+			});
+		}
+
+	</script>
+
+</body>
+</html>

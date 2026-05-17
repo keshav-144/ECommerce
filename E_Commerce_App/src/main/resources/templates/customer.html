@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Customer Management - Admin</title>
+	<link rel="stylesheet" th:href="@{/css/admin-shared.css}">
+</head>
+<body>
+	<div class="container">
+		<!-- Sidebar -->
+		<div class="sidebar">
+			<h2>Admin Panel</h2>
+			<ul>
+				<li><a href="/dashboard" class="menu-link">Dashboard</a></li>
+				<li><a th:href="@{/product/manage}" class="menu-link">Products</a></li>
+				<li><a th:href="@{/customer}" class="menu-link active">Customers</a></li>
+				<li><a th:href="@{/admin/logout}" class="menu-link">Logout</a></li>
+			</ul>
+		</div>
+
+		<div class="main-wrapper">
+			<h1>Member Management</h1>
+			<div class="table-container">
+				<div class="table-responsive">
+					<table>
+						<thead>
+							<tr>
+								<th>Full Name</th>
+								<th>Email ID</th>
+								<th>Phone</th>
+								<th>City</th>
+								<th>Status</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="user : ${users}">
+								<td th:text="${user.name}" style="font-weight: 600;"></td>
+								<td th:text="${user.email}"></td>
+								<td th:text="${user.phoneno}"></td>
+								<td th:text="${user.city}"></td>
+								<td>
+									<span th:if="${user.banned}" style="padding: 4px 8px; background: #FED7D7; color: #C53030; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">BANNED</span>
+									<span th:unless="${user.banned}" style="padding: 4px 8px; background: #C6F6D5; color: #2F855A; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">ACTIVE</span>
+								</td>
+								<td>
+									<a th:if="${!user.banned}" th:href="@{/ban/{id}(id=${user.id})}" class="btn btn-danger" style="padding: 6px 12px; font-size: 0.8rem;">Ban</a>
+									<a th:if="${user.banned}" th:href="@{/unban/{id}(id=${user.id})}" class="btn btn-success" style="padding: 6px 12px; font-size: 0.8rem;">Unban</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<ul class="pagination">
+				<li th:if="${currentPage > 1}">
+					<a th:href="@{/customer(pageNo=${currentPage-1})}">« Previous</a>
+				</li>
+				<li th:each="i : ${#numbers.sequence(1,totalPages)}" th:classappend="${currentPage == i} ? 'active'">
+					<a th:href="@{/customer(pageNo=${i})}" th:text="${i}"></a>
+				</li>
+				<li th:if="${currentPage < totalPages}">
+					<a th:href="@{/customer(pageNo=${currentPage+1})}">Next »</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

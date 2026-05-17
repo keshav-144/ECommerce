@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Edit Product - Admin</title>
+	<link rel="stylesheet" th:href="@{/css/admin-shared.css}">
+</head>
+<body>
+	<div class="container">
+		<!-- Sidebar -->
+		<div class="sidebar">
+			<h2>Admin Panel</h2>
+			<ul>
+				<li><a href="/dashboard" class="menu-link">Dashboard</a></li>
+				<li><a th:href="@{/product/manage}" class="menu-link">Products</a></li>
+				<li><a th:href="@{/customer}" class="menu-link">Customers</a></li>
+				<li><a th:href="@{/admin/logout}" class="menu-link">Logout</a></li>
+			</ul>
+		</div>
+
+		<!-- Main Content -->
+		<div class="main-wrapper">
+			<h1>Modify Product Details</h1>
+			<div class="form-container">
+				<form th:action="@{/updateProduct}" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="id" th:value="${product.id}">
+					<div class="form-group">
+						<label>Product Name</label>
+						<input type="text" name="name" th:value="${product.name}" required>
+					</div>
+					<div class="form-group">
+						<label>Product Description</label>
+						<textarea name="description" rows="4" th:text="${product.description}"></textarea>
+					</div>
+					<div class="form-group">
+						<label>Original Price (₹)</label>
+						<input type="number" name="originalPrice" th:value="${product.originalPrice}" required>
+					</div>
+					<div class="form-group">
+						<label>Discounted Price (₹)</label>
+						<input type="number" name="discountedPrice" th:value="${product.discountedPrice}" required>
+					</div>
+					<div class="form-group">
+						<label>Current Status</label>
+						<div style="display: flex; align-items: center; gap: 15px; background: #f8fafc; padding: 15px; border-radius: 8px;">
+							<img th:src="@{'/images/' + ${product.imageName}}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 6px;">
+							<div style="font-size: 0.85rem; color: #666;">
+								<p>Current image: <span th:text="${product.imageName}"></span></p>
+								<p style="margin-top: 5px;">Upload new to replace:</p>
+								<input type="file" name="imageFile" style="margin-top: 5px; border: none; padding: 0;">
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Update Catalog</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Your Cart - BootStore</title>
+	<link rel="stylesheet" th:href="@{/css/cart-responsive.css}">
+</head>
+<body>
+	<!-- NAVBAR -->
+	<nav class="navbar">
+		<div class="logo">BootStore</div>
+		<ul class="nav-links">
+			<li th:if="${session.loggedInUser != null}"><a href="/">Home</a></li>
+			<li th:if="${session.loggedInUser != null}"><a href="/profile">My Profile</a></li>
+			<li th:if="${session.loggedInUser != null}"><a href="/logout">Logout</a></li>
+		</ul>
+	</nav>
+
+	<div class="page">
+		<!-- LEFT SIDE -->
+		<div class="left">
+			<div class="heading">
+				<h2>Shopping Cart (<span th:text="${cartItems.size()}">0</span> items)</h2>
+			</div>
+			
+			<div th:if="${cartItems.isEmpty()}" style="padding: 40px; text-align: center; background: white; border-radius: 0 0 12px 12px;">
+				<h3>Your cart is empty!</h3>
+				<a href="/" class="btn btn-primary" style="margin-top: 20px; text-decoration: none;">Shop Now</a>
+			</div>
+
+			<div th:each="cart : ${cartItems}">
+				<div class="product-card-item">
+					<img th:src="@{'/images/' + ${cart.product.imageName}}" alt="product">
+					<div class="details">
+						<h3 th:text="${cart.product.name}"></h3>
+						<p th:text="${cart.product.description}"></p>
+						<div class="price">
+							<span class="old" th:text="'₹' + ${cart.product.originalPrice * cart.quantity}"></span>
+							<span class="new" th:text="'₹' + ${cart.product.discountedPrice * cart.quantity}"></span>
+						</div>
+						<div class="qty">
+							<span>Quantity:</span>
+							<select th:onchange="updateQty([[${cart.id}]], this.value)">
+								<option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}" th:selected="${cart.quantity == i}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="actions">
+					<button>Save For Later</button>
+					<a th:href="@{'/cart/remove/' + ${cart.id}}" style="flex: 1;">
+						<button style="width: 100%;">Remove Item</button>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- RIGHT SIDE -->
+		<div class="right">
+			<div class="price-box">
+				<h2>Price Details</h2>
+				<div class="row">
+					<span>Total MRP</span>
+					<span th:text="'₹' + ${totalOriginal}"></span>
+				</div>
+				<div class="row">
+					<span>Discount</span>
+					<span class="green" th:text="'-₹' + ${totalDiscounted}"></span>
+				</div>
+				<div class="row">
+					<span>Delivery Charges</span>
+					<span class="green">FREE</span>
+				</div>
+				<div class="row total">
+					<span>Total Amount</span>
+					<span th:text="'₹' + ${totalAmount}"></span>
+				</div>
+				<div class="save">
+					You will save <strong th:text="'₹' + ${totalDiscounted}"></strong> on this order!
+				</div>
+				<form action="/placeOrder" method="post" style="margin-top: 25px;">
+					<button type="submit" class="order-btn" th:disabled="${cartItems.isEmpty()}">Place Order</button>
+				</form>
+			</div>
+			
+			<div class="secure">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+				<span>100% Safe and Secure Payments</span>
+			</div>
+		</div>
+	</div>
+
+	<div th:if="${successMsg}" class="toast success-box">
+		<span th:text="${successMsg}"></span>
+	</div>
+	<div th:if="${errorMsg}" class="toast error-box">
+		<span th:text="${errorMsg}"></span>
+	</div>
+
+	<div class="footer">
+		© 2026 BootStore. High-Quality Footwear Delivered to Your Door.
+	</div>
+
+	<script>
+		function updateQty(cartId, qty) {
+			window.location.href = "/cart/update/" + cartId + "/" + qty;
+		}
+	</script>
+</body>
+</html>

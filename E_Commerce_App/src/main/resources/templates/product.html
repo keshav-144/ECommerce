@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Product Management - Admin</title>
+	<link rel="stylesheet" th:href="@{/css/admin-shared.css}">
+</head>
+<body>
+	<div class="container">
+		<!-- Sidebar -->
+		<div class="sidebar">
+			<h2>Admin Panel</h2>
+			<ul>
+				<li><a href="/dashboard" class="menu-link">Dashboard</a></li>
+				<li><a th:href="@{/product/manage}" class="menu-link active">Products</a></li>
+				<li><a th:href="@{/customer}" class="menu-link">Customers</a></li>
+				<li><a th:href="@{/admin/logout}" class="menu-link">Logout</a></li>
+			</ul>
+		</div>
+
+		<!-- Main Content -->
+		<div class="main-wrapper">
+			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+				<h1>Product Catalog</h1>
+				<a href="/addProduct" class="btn btn-primary">Add New Item</a>
+			</div>
+
+			<div class="table-container">
+				<div class="table-responsive">
+					<table>
+						<thead>
+							<tr>
+								<th>Thumbnail</th>
+								<th>Name</th>
+								<th>Discount Price</th>
+								<th>Edit</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="p : ${products}">
+								<td class="product-img-td">
+									<img th:src="@{'/images/'+${p.imageName}}" width="60" height="60">
+								</td>
+								<td th:text="${p.name}" style="font-weight: 600;"></td>
+								<td th:text="'₹' + ${p.discountedPrice}" style="color: #2F855A; font-weight: 700;"></td>
+								<td>
+									<a th:href="@{/editProduct/{id}(id=${p.id})}" class="btn" style="background: #E2E8F0; color: #2D3748; padding: 6px 12px; font-size: 0.8rem;">Modify</a>
+								</td>
+								<td>
+									<a th:href="@{/deleteProduct/{id}(id=${p.id})}" class="btn btn-danger" style="padding: 6px 12px; font-size: 0.8rem;" onclick="return confirm('Confirm delete?')">Remove</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<ul class="pagination">
+				<li th:if="${currentPage > 1}">
+					<a th:href="@{/product/manage(pageNo=${currentPage-1})}">«</a>
+				</li>
+				<li th:each="i : ${#numbers.sequence(1,totalPages)}" th:classappend="${currentPage == i} ? 'active'">
+					<a th:href="@{/product/manage(pageNo=${i})}" th:text="${i}"></a>
+				</li>
+				<li th:if="${currentPage < totalPages}">
+					<a th:href="@{/product/manage(pageNo=${currentPage+1})}">»</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

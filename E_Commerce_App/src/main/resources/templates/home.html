@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BootStore - Premium Footwear</title>
+	<link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+	<!-- NAVBAR -->
+	<nav class="navbar">
+		<div class="logo">BootStore</div>
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li th:if="${session.loggedInUser == null}"><a href="/login">Login</a></li>
+			<li th:if="${session.loggedInUser == null}"><a href="/register">Register</a></li>
+			<li class="dropdown" th:if="${session.loggedInUser != null}">
+				<a href="#">Account ▾</a>
+				<div class="dropdown-content">
+					<a href="/profile">My Profile</a>
+					<a href="/cart">My Cart</a>
+					<a href="/logout">Logout</a>
+				</div>
+			</li>
+		</ul>
+	</nav>
+
+	<!-- Hero Section -->
+	<section class="hero">
+		<h1>The Ultimate Collection</h1>
+		<p>Discover boots that blend timeless style with unparalleled comfort.</p>
+		<button>Explore Now</button>
+	</section>
+
+	<!-- PRODUCTS -->
+	<section class="products">
+		<h2>Top Picks This Season</h2>
+		<div class="product-container">
+			<div class="product-card" th:each="p : ${products}">
+				<div class="product-image">
+					<img th:src="@{'/images/' + ${p.imageName}}" alt="product">
+				</div>
+				<div class="product-info">
+					<h3 th:text="${p.name}"></h3>
+					<p th:text="${p.description}"></p>
+					<div class="price">
+						<span class="original">₹ <span th:text="${p.originalPrice}"></span></span>
+						<span class="discount">₹ <span th:text="${p.discountedPrice}"></span></span>
+					</div>
+					<div class="btn-group">
+						<a th:href="@{'/buyNow/' + ${p.id}}">
+							<button class="buy-btn">Buy Now</button>
+						</a>
+						<a th:href="@{'/cart/add/' + ${p.id}}">
+							<button class="cart-btn">Add To Cart</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div th:if="${errorMsg}" class="error-box" style="padding: 20px; text-align: center; color: red;">
+		<h3 th:text="${errorMsg}"></h3>
+	</div>
+
+	<div class="footer">
+		© 2026 BootStore. All rights reserved.
+	</div>
+</body>
+</html>
