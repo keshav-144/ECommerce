@@ -19,14 +19,10 @@ public class AdminController
 {
 	@Autowired
 	private AdminService aService;
-	
-	@GetMapping("/dashboard")
-public String dashboard(HttpSession session) {
-    if (session.getAttribute("loggedInAdmin") == null) {
-        return "redirect:/admin/login";  // not logged in
-    }
-    return "Dashboard";
-}
+	 @GetMapping("/dashboard")
+	    public String dashboard() {
+	        return "Dashboard";
+	    }
 	
 	// Open adminLogin page
     @GetMapping("/admin/login")
