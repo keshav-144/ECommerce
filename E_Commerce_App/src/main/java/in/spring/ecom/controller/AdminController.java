@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import in.sp.main.entities.Admin;
-import in.sp.main.services.AdminService;
+import in.spring.ecom.entities.Admin;
+import in.spring.ecom.services.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -54,4 +54,3 @@ public class AdminController
 		return "redirect:/admin/login";
 	}
 }
-
