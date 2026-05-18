@@ -31,20 +31,24 @@ public class AdminController
         return "admin";
     }
     
-    @PostMapping("/admin/login")
-    public String login(@RequestParam String email,String password,Model model)
+   @PostMapping("/admin/login")
+public String login(@RequestParam String email, 
+                    @RequestParam String password, 
+                    Model model,
+                    HttpSession session)  // add this
+{
+    Admin admin = aService.login(email, password);
+    if(admin != null)
     {
-    	Admin admin = aService.login(email, password);
-    	if(admin !=null)
-    	{
-    		return "Dashboard";
-    	}
-    	else
-    	{
-    		model.addAttribute("error","Admin not found");
-    		return "Admin";
-    	}
+        session.setAttribute("loggedInAdmin", admin);  // add this
+        return "redirect:/dashboard";  // use redirect
     }
+    else
+    {
+        model.addAttribute("error", "Admin not found");
+        return "admin";  // lowercase to match your template
+    }
+}
     @GetMapping("/admin/logout")
 	public String logout(HttpServletRequest request)
 	{
