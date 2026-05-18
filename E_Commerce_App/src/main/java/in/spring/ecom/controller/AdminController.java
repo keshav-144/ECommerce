@@ -41,7 +41,7 @@ public String login(@RequestParam String email,
     if(admin != null)
     {
         session.setAttribute("loggedInAdmin", admin);  // add this
-        return "redirect:/dashboard";  // use redirect
+        return "redirect:/Dashboard";  // use redirect
     }
     else
     {
