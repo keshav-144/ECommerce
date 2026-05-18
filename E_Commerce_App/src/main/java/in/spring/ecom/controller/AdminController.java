@@ -30,7 +30,7 @@ public class AdminController
         return "admin";
     }
     
-   @PostMapping("Dashboard")
+   @PostMapping("/Dashboard")
 public String login(@RequestParam String email, 
                     @RequestParam String password, 
                     Model model,
