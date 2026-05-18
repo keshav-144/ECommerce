@@ -23,12 +23,6 @@ public class AdminController
     public String dashboard(HttpSession session)
     {
         Admin admin = (Admin) session.getAttribute("loggedInAdmin");
-
-        if(admin == null)
-        {
-            return "redirect:/admin/login";
-        }
-
         return "Dashboard";
     }
 
