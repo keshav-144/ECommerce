@@ -39,7 +39,7 @@ public class AdminController
     	else
     	{
     		model.addAttribute("error","Admin not found");
-    		return "Admin";
+    		return "admin";
     	}
     }
     @GetMapping("/admin/logout")
