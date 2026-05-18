@@ -30,7 +30,7 @@ public class AdminController
         return "admin";
     }
     
-   @PostMapping("/admin/login")
+   @PostMapping("Dashboard")
 public String login(@RequestParam String email, 
                     @RequestParam String password, 
                     Model model,
@@ -40,12 +40,12 @@ public String login(@RequestParam String email,
     if(admin != null)
     {
         session.setAttribute("loggedInAdmin", admin);  // add this
-        return "redirect:/Dashboard";  // use redirect
+        return "Dashboard";  // use redirect
     }
     else
     {
         model.addAttribute("error", "Admin not found");
-        return "admin";  // lowercase to match your template
+        return "redirect:/admin/login";  // lowercase to match your template
     }
 }
     @GetMapping("/admin/logout")
